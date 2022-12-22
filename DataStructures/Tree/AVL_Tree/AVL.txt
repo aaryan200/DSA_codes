@@ -1,0 +1,18 @@
+Balance Factor:
+BF=H(node.right)-H(node.left) # H -> height
+BF should be -1,0 or +1.
+
+If BF!={-1,0,1}:
+	Tree is left heavy:
+		Left child has left child:
+			RightRotate(node)
+		Left child has right child:
+			LeftRotate(node.left)
+			RightRotate(node)
+
+	Tree is right heavy:
+		Right child has right child:
+			LeftRotate(node)
+		Right child has left child:
+			RightRotate(node.right)
+			LeftRotate(node)

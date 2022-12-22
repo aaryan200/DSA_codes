@@ -1,0 +1,24 @@
+Dp = Recursion + storage
+
+Base condition -> smallest valid input
+
+Recursive:
+	f(n) => f(smaller than n) ...
+
+
+Top down:
+	Matrix is made only for variables which change
+	So dimensions are a[range of var1][range of var2]
+	Base condition of recursive => Initialization in top down
+
+
+1. Fractional knapsack -> Greedy
+
+	Fraction of an item can also be added in bag
+2. 0/1 -> 
+
+	Only complete item can be added
+	Multiple occurences of 1 item are not allowed
+3. Unbounded knapsack
+
+	Unlimited supply of every item.

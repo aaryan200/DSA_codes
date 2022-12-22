@@ -1,0 +1,153 @@
+Array:
+1. Store a given number of elements of a given data-type.
+2. Write/modify element at a position.
+3. Read element at a position.
+
+Dynamic List:
+1. Empty list has size 0
+2. insert
+3. remove
+4. count number of elements
+5. Read/modify element at a position.
+6. Specify data-type
+
+make array A[MAXSIZE]
+if end==-1 => List is empty
+
+When array is full, create a new larger array of double length, copy
+previous array into new array, free the memory for the previous array.
+
+Access -> O(1)
+Insert/Add -> O(n)
+Remove -> O(n)
+
+Linked list:
+1st node - head
+struct Node {
+	int data;
+	Node* next;
+};
+address of the head node gives us access of the complete list.
+The address in the last node is 0 which is invalid.
+Access: O(n).
+Insert: O(n).
+
+Stack:
+Last In First Out
+
+A list with the restriction that insertion and deletion can be performed
+only from one end, called the top.
+
+Queue:
+A list or collection so that insertion can be performed at one end(rear)
+and deletion can be performed at other end.
+FIFO
+push, pop, front, empty -> O(1)
+
+Circular array:
+current position = i
+next position = (i+1)%N
+previous position = (i+N-1)%N
+
+Trees:
+A non-linear data structure.
+Consist of nodes linked together in a non linear form
+root 
+children
+parent
+leaf - no child
+ancestor
+descendent
+Recursive data structures
+
+N nodes => N-1 edges
+
+Depth of node x= length of path from root to x = Number of edges in
+path from root to x
+
+Height of node x= number of edges in longest path from x to a leaf
+
+Height of tree= height of root node
+
+Binary tree - a tree in which node can have at most 2 children
+
+struct Node {
+	int data;
+	Node* left;
+	Node* right;
+};
+
+If any or all of the child don't exist, it is assigned NULL
+
+Strict/ Proper binary tree - Each node can have either 2 or 0 children.
+
+Complete binary tree - All levels except possibly the last are completely
+filled and all nodes are as left as possible
+
+If level of root = 0
+Then max number of nodes at level i = 2^(i)
+
+Perfect binary tree: All levels are completely filled.
+Maximum number of nodes in a binary tree with height h
+=2^(h+1)-1 = 2^(number of levels)-1
+Height of complete binary tree = floor(log_2(n))
+Height of an empty tree = -1
+Height of tree with 1 node =0
+
+Balanced binary tree -
+Difference between height of left and right subtree for every node is
+not more than k (mostly 1).
+Search, Insert, Remove - O(logn)
+
+Binary Search Tree -
+a binary tree in which for each node, value of all the nodes in left
+subtree is lesser or equal and value of all the nodes in right subtree is greater
+
+Traversal of tree:
+1. Breadth-first:
+	Level - order traversal - O(n) time complexity
+	O(n) space complexity for worst
+	n -> number of nodes
+2. Depth-first:
+	<root><left><right> - Preorder
+	<left><root><right> - Inorder
+	<left><right><root> - Postorder
+   Inorder traversal will give sorted list
+	Space complexity - O(h), h -> height of tree
+
+Graphs:
+Ordered pair of set of vertices and set of edges.
+
+Edges:
+1. directed = (u,v)
+2. undirected = {u,v}
+
+All directed edges => Directed graph or digraph
+All undirected edges => Undirected graph
+
+Weighted graph: Edges have weights
+Unweighted graph: Edges don't have weights
+
+An edge is called self-loop if it involves only 1 vertex
+Multiedge is an edge if it occurs more than once in a graph
+
+if |v|=n then 0<=|E|<=n(n-1) if directed
+and 0<=|E|<=n(n-1)/2 if undirected
+
+Dense graph => too many edges => stored in adjacency matrix
+Sparse graph => too few edges => stored in adjaceny list
+
+Simple Path:
+A walk in which no vertices are repeated
+
+Trail:
+A walk in which no edges are repeated
+
+Strongly connected graphs:
+if there is a path from any vertex to any other vertex.
+
+A walk is closed walk if it starts and ends at same vertex and its length>0
+length = number of edges
+
+|e|<<|v| => Adjacency list
+|e|->|v| => Adjacency matrix

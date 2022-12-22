@@ -1,0 +1,11 @@
+Right Rotation:
+
+B is left child of A
+rightRotate(A):
+	B:=A.left
+	A.left=B.right
+	B.right=A
+	return B
+then parent of A should point to B
+
+Left Rotation:

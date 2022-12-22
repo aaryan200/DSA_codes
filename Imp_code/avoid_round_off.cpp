@@ -1,0 +1,1 @@
+Use cout << std::setprecision(10) << std::fixed;

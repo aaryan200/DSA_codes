@@ -1,0 +1,18 @@
+Identification:
+	1. k is given
+	2. smallest/largest is given
+
+Types:
+	1. min heap:
+		kth largest
+	2. max heap:
+		kth smallest
+
+Questions based on sorting 
+We make a heap of size k and order nlogn is reduced to nlogk
+
+
+Max heap will ensure that the top element will always be maximum. It doesn't
+say that heap will always be sorted
+
+Similarly top of min heap will always be smallest number.

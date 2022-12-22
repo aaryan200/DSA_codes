@@ -1,0 +1,35 @@
+Identify:
+1. Choice
+2. Optimal => maximum value, minimum value of profit, cost etc.
+
+Recursive me 1 call => no dp
+
+Recursive me 2 call => probability of dp
+
+Recursive -> Memoization
+|
+> Top down table
+
+Recursive -> Memoization -> Top down table
+
+canSum:
+-------
+
+m -> target sum
+n -> length of array
+
+Maximum values which we have to calculate is m. => m = number of nodes
+for each node n computations are required => O(m*n) time complexity
+
+LCS:
+----
+While printing LCS, if you store string at every location of dp table,
+you are wasting a lot of memory.
+
+
+Don't store heavy things in dp table
+
+Shortest common supersequence:
+------------------------------
+All letters which appeared in lcs (longest common subsequence) will appear
+once and others will appear as they are.

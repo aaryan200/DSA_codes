@@ -1,0 +1,10 @@
+9 9
+2 3 socks shoes
+6 3 undershorts shoes
+6 7 undershorts pants
+7 8 pants belt
+7 3 pants shoes
+8 5 belt jacket
+4 8 shirt belt
+4 9 shirt tie
+9 5 tie jacket
