@@ -19,21 +19,25 @@ struct TreeNode {
 };
 
 int solve(TreeNode** node, int& res) {
-    if (*node == NULL) return 0;
-    int l = solve(&((*node)->left),res), r= solve(&((*node)->right),res),temp = l+r+1;
-    res = max(res,temp);
-    return max(l,r)+1;
+    if ((*node)==NULL) return 0;
+    int l = solve(&((*node)->left),res);
+    int r = solve(&((*node)->right),res);
+    int val = ((*node)->val);
+    int temp = max(l,r)+val;
+    int ans = val+l+r;
+    res = max(max(max(temp,ans),val),res);
+    return max(temp,val);
 }
-
-int diameter(TreeNode* root) {
+int maxPathSum(TreeNode* root) {
     int res = INT_MIN;
-    return solve(&root,res);
+    solve(&root,res);
+    return res;
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     return 0;
 }

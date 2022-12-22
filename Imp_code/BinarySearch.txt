@@ -1,0 +1,2 @@
+In binary search, use while(high-low>1) and if somehow high-low becomes equal to 1,
+the loop breaks and then search in high.

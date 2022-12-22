@@ -15,36 +15,33 @@ typedef unsigned long long ull;
 // }
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
+const int mod = 1.0e9+7;
 
 void solve() {
-    ll n,m,k,st=0;
-    cin>>n>>m>>k;
-    vector<ll> a(m,0);
-    priority_queue<ll, vector<ll>, greater<ll> > q;
-    repl(i,0,m) cin>>a[i];
-    if (m<k) {
-        print("NO");
-        return;
+    int h,w;
+    cin>>h>>w;
+    vector<string> v(h,"");
+    repi(i,0,h) cin>>v[i];
+    ll dp[h+1][w+1];
+    memset(dp,-1,(h+1)*(w+1)*sizeof(ll));
+    dp[h][w]=1;
+    for (int i=h-1;i>=1;i--) {
+        if (v[i-1][w-1]=='#') dp[i][w]=0;
+        else if (v[i-1][w-1]=='.' and dp[i+1][w]) dp[i][w]=1;
+        else dp[i][w]=0;
     }
-    repl(i,0,m) {
-        if (st>=k) {
-            st = q.top();
-            q.pop();
-        }
-        // print(st);
-        ll temp;
-        if ((n-st)%k==0) temp = (n-st)/k;
-        else temp = (n-st)/k + 1;
-        if (a[i]>temp) {
-            print("NO");
-            return;
-        }
-        q.push(st+a[i]*k);
-        st++;
-        // min_av = min(min_av, st+a[i]*k);
-        // st = min_av;
+    for (int j=w-1;j>=1;j--) {
+        if (v[h-1][j-1]=='#') dp[h][j]=0;
+        else if (v[h-1][j-1]=='.' and dp[h][j+1]) dp[h][j]=1;
+        else dp[h][j]=0;
     }
-    print("YES");
+    for (int i=h-1;i>=1;i--) {
+        for (int j=w-1;j>=1;j--) {
+            if (v[i-1][j-1]=='#') dp[i][j]=0;
+            else dp[i][j]=dp[i+1][j]+dp[i][j+1];
+        }
+    }
+    print((dp[1][1])%(mod));
     return;
 }
 
@@ -53,7 +50,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     ll it,t=1;
-    cin>>t;
+    // cin>>t;
     for (it=0;it<t;it++) {
         solve();
     }
