@@ -2,6 +2,7 @@
     "cph.general.defaultLanguageTemplateFileLocation": "",
     "files.defaultLanguage": "cpp",
     "files.associations": {
-        "variant": "cpp"
+        "variant": "cpp",
+        "iostream": "cpp"
     }
 }

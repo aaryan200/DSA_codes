@@ -15,33 +15,47 @@ typedef unsigned long long ull;
 // }
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
-const int mod = 1.0e9+7;
+const int N=21;
+const ll mod = 1.0e9+7;
+ll dp[N][N][N][N];
 
-void solve() {
-    int h,w;
-    cin>>h>>w;
-    vector<string> v(h,"");
-    repi(i,0,h) cin>>v[i];
-    ll dp[h+1][w+1];
-    memset(dp,-1,(h+1)*(w+1)*sizeof(ll));
-    dp[h][w]=1;
-    for (int i=h-1;i>=1;i--) {
-        if (v[i-1][w-1]=='#') dp[i][w]=0;
-        else if (v[i-1][w-1]=='.' and dp[i+1][w]) dp[i][w]=1;
-        else dp[i][w]=0;
-    }
-    for (int j=w-1;j>=1;j--) {
-        if (v[h-1][j-1]=='#') dp[h][j]=0;
-        else if (v[h-1][j-1]=='.' and dp[h][j+1]) dp[h][j]=1;
-        else dp[h][j]=0;
-    }
-    for (int i=h-1;i>=1;i--) {
-        for (int j=w-1;j>=1;j--) {
-            if (v[i-1][j-1]=='#') dp[i][j]=0;
-            else dp[i][j]=dp[i+1][j]+dp[i][j+1];
+ll solution(vector<vector<int>>& a, int i, int j, int k, int l) {
+    if (k<i or l<j) return dp[i][j][k][l]=1;
+    if (dp[i][j][k][l]!=-1) return dp[i][j][k][l];
+    // if (k==i and l==j) {
+    //     if (a[i][j]) return dp[i][j][k][l]=1;
+    //     else return dp[i][j][k][l]=0;
+    // }
+    ll ct=0;
+    for (int x=i;x<=k;x++) {
+        for (int y=j;y<=l;y++) {
+            if (a[x][y])
+            {
+                ll one,two,thre,four;
+                if (dp[i][j][x-1][y-1]!=-1) one=dp[i][j][x-1][y-1];
+                else one=solution(a,i,j,x-1,y-1);
+                if (dp[x+1][y+1][k][l]!=-1) two=dp[x+1][y+1][k][l];
+                else two=solution(a,x+1,y+1,k,l);
+                if (dp[x+1][j][k][y-1]!=-1) thre= dp[x+1][j][k][y-1];
+                else thre=solution(a,x+1,j,k,y-1);
+                if (dp[i][j+1][x-1][l]!=-1) four=dp[i][j+1][x-1][l];
+                else four=solution(a,i,j+1,x-1,l);
+                ct=(ct+one*two+thre*four)%mod;
+            }
         }
     }
-    print((dp[1][1])%(mod));
+    return dp[i][j][k][l]=ct;
+}
+
+void solve() {
+    int n;
+    cin>>n;
+    vector<vector<int>> a(n,vector<int>(n,0));
+    repi(i,0,n) {
+        repi(j,0,n) cin>>a[i][j];
+    }
+    memset(dp,-1,N*N*N*N*sizeof(ll));
+    print(solution(a,0,0,n-1,n-1)/n);
     return;
 }
 

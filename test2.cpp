@@ -7,30 +7,29 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef pair<int,pair<int,int>> ppi;
+const int N = 3000;
+double dp[N][N];
 
-// template <typename InIt1, typename InIt2, typename OutIt>
-// OutIt unordered_set_intersection(InIt1 b1, InIt1 e1, InIt2 b2, InIt2 e2, OutIt out) {
-//     while (!(b1 == e1)) {
-//         if (!(std::find(b2, e2, *b1) == e2)) {
-//             *out = *b1;
-//             ++out;
-//         }
+void rec(vector<double>& p, int n, int diff, vector<double>& pas, double prob) {
+	if (n==0 and diff>0) pas.push_back(prob);
+	else if (n==0) return;
+	else {
+		rec(p,n-1,1+diff,pas,prob*p[n-1]);
+		rec(p,n-1,diff-1,pas,prob*(1-p[n-1]));
+	}
+}
 
-//         ++b1;
-//     }
-
-//     return out;
-// }
+void solve() {}
 
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	unordered_set<int> s1={1,2,3};
-	unordered_set<int> s2={4,5,6};
-	// unordered_set<int>::iterator it,st;
-	set_union(s1.begin(),s1.end(),s2.begin(),s2.end(),inserter(s1,s1.begin()));
-	// for (st=s1.begin();st!=s1.end();st++) cout<<*st<<endl;
-	for (auto& it:s1) cout<<it<<endl;
+	int n;
+	cin>>n;
+	vector<double> p(n,0);
+	for (int i=0;i<n;i++) cin>>p[i];
+	p.erase(p.begin()+1);
+	for (auto& it:p) print(it);
 	return 0;
 }
