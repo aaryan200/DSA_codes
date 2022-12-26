@@ -1,0 +1,50 @@
+Tree:
+-----
+A tree is an undirected graph with no cycles.
+Graph with n nodes and n-1 edges
+
+Rooted Tree:
+------------
+Designated root node where every edge either points away from or towards the root node.
+When edges point away from root, graph is called out-tree.
+When point towards => in-tree.
+
+DAGs(Directed Acyclic Graph):
+----------------------------
+Directed graphs with no cycles.
+
+Bipartite Graph:
+--------------
+Vertices can be split into 2 independent groups U,V such that every edge connects between U and V.
+
+Complete Graph:
+-------------
+There is a unique edge between every pair of nodes.
+
+Strongly connected components:
+----------------------------
+Every vertex in a given cycle can reach every other vertex in same cycle.
+
+Bridge/ cut edge:
+----------------
+Any edge in graph, whose removal increases number of connected components.
+
+Articulation point/ Cut vertex:
+------------------------------
+Any node in graph, whose removal increases number of connected components.
+
+Minimum spanning tree:
+--------------------
+Subset of edges of a connected, edge-weighted graph that connects all Vertices together without any cycles and 
+with Minimum possible total edge weight.
+
+Common Problems:
+---------------
+1. Shortest path: BFS(unweighted graph), Dijkstra's, Bellman-Ford, Floyd-Warshall, A*...
+2. Does there exist a path between node A and B:
+    Union find data structure, or DFS.
+3. Negative cycles: Bellman-Ford, Floyd-Warshall
+4. Strongly connected components: Tarjan's and Kosaraju's.
+5. Travelling salesman: Held-karp, branch and bound, approximation algorithms.
+6. Minimum spanning tree: Kruskal, Prim, Borukva
+7. Max flow(for e.g. maximum flow of water through a pipe): Ford-Fulkerson, Edmonds-Karp, Dinic's

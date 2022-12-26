@@ -1,0 +1,11 @@
+use
+nodes_left_in_layer = 1
+nodes_in_next_layer = 0
+count_steps = 0
+for every iteration in bfs, reduce nodes_left_in_layer by -1 and increase nodes_in_next_layer by number of
+neighbors (not visited) of current node.
+if (nodes_left_in_layer==0) {
+    count_steps++;
+    nodes_left_in_layer = nodes_in_next_layer;
+    nodes_in_next_layer = 0;
+}

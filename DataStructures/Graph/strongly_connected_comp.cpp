@@ -103,7 +103,7 @@ int main()
     }
     for (ll i=0;i<m;i++) {
         cin>>u>>v1;
-        addEdge(v,u-1,v1-1);
+        addEdge(v,u,v1);
     }
     printGraph(v);
     print("");
@@ -111,7 +111,7 @@ int main()
     // print(strconn.size());
     for (auto& it:strconn) {
         for (auto& it1:it) {
-            cout<<it1+1<<" ";
+            cout<<it1<<" ";
         }
         print("");
     }
