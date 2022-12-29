@@ -1,0 +1,18 @@
+Target xor = k
+
+arr[i,i] is also considered a subarray.
+
+Prefix array:
+prefix[0]=0;
+prefix[i]=(arr[0]^arr[1]^...^arr[i-1]) for all i>=1
+
+Let answer = 0
+map m from xor value to frequency of its occurence in prefix array.
+
+Let prefix[i]=y
+Let prefix[j+1]=x
+=> if xor sum of arr[i,j] (i.e. arr[i]^arr[i+1]...^arr[j]) is equal to k, then x = y^k
+=> We know how many times xor sum x has appeared in xorarr till now
+=> If you add number of times x has appeared in xorarr till now, then that will be the number of subarrays ending at j and starting at i<j. => answer+=m[x]
+Now, if y==k (i.e. xor sum of arr[j,j] is equal to k) then add it to answer => answer++;
+Now, m[y]++;

@@ -1,5 +1,5 @@
 // C++ program to find first element that
-// is strictly smaller than given target.
+// is strictly smaller than given target in a sorted array.
 #include<bits/stdc++.h>
 using namespace std;
 

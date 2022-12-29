@@ -3,6 +3,7 @@
     "files.defaultLanguage": "cpp",
     "files.associations": {
         "variant": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "functional": "cpp"
     }
 }

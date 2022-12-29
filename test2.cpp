@@ -15,6 +15,8 @@ int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-
+	print(200000);
+	for (int i=0;i<200000;i++) cout<<199809<<" ";
+	cout<<endl;
 	return 0;
 }

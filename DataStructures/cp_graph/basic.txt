@@ -48,3 +48,30 @@ Common Problems:
 5. Travelling salesman: Held-karp, branch and bound, approximation algorithms.
 6. Minimum spanning tree: Kruskal, Prim, Borukva
 7. Max flow(for e.g. maximum flow of water through a pipe): Ford-Fulkerson, Edmonds-Karp, Dinic's
+
+Center of Undirected Tree:
+--------------
+Center is always the middle vertex or middle two Vertices in every longest path along the tree.
+
+Isomorphic trees:
+----------------
+structurally same trees.
+There should exist a function f which can map all the nodes/edges in G1 to G2 and vice-versa.
+serialize trees into a unique encoding, then if any other tree has same encoding, they are Isomorphic.
+If trees are undirected, then choose Center of the tree for both the trees, then serialize them.
+While combining child labels, they should be sorted => uniqueness
+algo:
+1. Leaf nodes are assigned knuth tuples '()'.
+2. Every time you move up a layer the labels of previous subtrees get sorted lexicographically and wrapped in brackets.
+3. you can't process a node until u have processed all it's children.
+
+Lowest Common Ancestor:
+------------------------
+In a rooted tree, LCA of two nodes a and b is deepest node c that has both a and b as descnedants. ( A node can be descnedant of itself)
+LCA(a,a) = a
+Eulerian Tour + Range Minimum Query method.
+Eulerian Tour: Visit a node, visit its 1st subtree and again visit the node, then visit 2nd subtree and again visit the node and so on.
+Make a depth array and a node array.
+At every visit of a node, push_back it to node array and push_back its depth in depth array.
+Depth of root node = 0, next level is 1, ...
+To find LCA(a,b) find their index in node array, let it be a1 and b1. Then search for lowest value of depth in [a1,b1] of depth array, that index in node array will be LCA of a and b
