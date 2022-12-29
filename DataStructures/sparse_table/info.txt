@@ -1,0 +1,46 @@
+One immutable number array.
+[l, r] is a range of array, we want to answer queries like minimum of all numbers from [l, r] in array or maximum or sum of all numbers.
+
+f(x,y) is overlap friendly if:
+f(f(a,b),f(b,c)) = f(a,f(b,c)) for all valid a,b,c
+For eg. min(a,b), gcd(a,b), max(a,b)
+
+Not overlap friendly:
+a*b, a+b, a-b
+
+[l, r] can be broken down into powers of 2
+for example [5, 18] = [5, 13] U [13, 17] U [17, 18]
+
+We'll precompute the answer for all intervals of size 2^x to efficiently answer range queries between [l, r].
+N = size of input array.
+2^P = most significant bit (largest number less than N which is a power of 2)
+P = 31 - __builtin_clz(N)
+
+Initialize a table with P+1 rows and N columns.
+Fill first row with input value
+Each cell (i,j) represent the answer for range [j,j+2^i) in original array.
+(i and j are 0th index)
+For cells where range reaches out of bound, ignore them.
+For min sparse table, range combination function is f(x,y)=min(x,y) // This function should be overlap friendly
+
+For overlap friendly functions:
+------------------------------
+O(1) time
+The range for cell (i,j) can be split into a left interval [j, j+2^(i-1)) and a right interval [j+2^(i-1), j+2^i)
+whose values correspond to cells (i-1,j) and (i-1,j+2^(i-1)) respectively.
+
+To find min value from all values in range [i,j], find largest number less than j-i+1 (lenght of interval) which is a power of 2 and split interval into [l, l+k) and [r-k+1,r+1)
+for eg [1,11] can be broken into [1,9] and [4,11]
+
+i.e [i,j]
+find k = msb(j-i+1) = 2^p
+
+min(arr[i,j]) = min(table[p][l], table[p][r-k+1])
+
+For overlap non-friendly functions:
+----------------------------------
+O(log(n)) time
+Break intervals into lengths of powers of two
+[2,15] can be broken into three intervals [2, 2+2^3), [10, 10+2^2), [14, 14+2^1)
+
+[1,5] => len = 5-1+1=5, 5 = (101) => break into [1,1+2^2), [5,5+2^0) i.e. table[2][1], table[0][5]

@@ -4,6 +4,8 @@
     "files.associations": {
         "variant": "cpp",
         "iostream": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "type_traits": "cpp",
+        "atomic": "cpp"
     }
 }

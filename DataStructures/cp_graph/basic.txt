@@ -75,3 +75,23 @@ Make a depth array and a node array.
 At every visit of a node, push_back it to node array and push_back its depth in depth array.
 Depth of root node = 0, next level is 1, ...
 To find LCA(a,b) find their index in node array, let it be a1 and b1. Then search for lowest value of depth in [a1,b1] of depth array, that index in node array will be LCA of a and b
+If there are multiple indexes in node array, it is easiest to select the last encountered (largest) index.
+For that, create a last array.
+Create a sparse table using depth array.
+When a Query node1, node2 is asked
+It will see last[node1] and last[node2], and take left = min of them and right = max of them.
+
+Now, it will return index i of element in depth array which is minimum in [left, right] interval of depth array.
+Lowest common Ancestor of node1 and node2 is nodes[i]
+
+
+Top sort:
+--------
+Only for DAGs
+An ordering of nodes in a directed Acyclic graph where for each directed edge from node A to node B, node A appears before B in ordering. Time complexity O(V+E). Top sort isn't unique. Not every graph has a topological ordering.
+Kahn's Algorithm:
+Identify a node with 0 indegree, add it to topsort array and remove it from graph
+
+Dijkstra's single source Shortest path algo:
+-------------------------------------------
+Only applicable for non negative edge weights.
