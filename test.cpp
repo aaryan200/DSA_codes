@@ -21,7 +21,26 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // memset(arr, 0, n*sizeof(arr[0]));
 
 void solve() {
-    
+    int n,m;
+    cin>>n>>m;
+    ll a,b;
+    priority_queue<ll,vector<ll>, greater<ll>> minh;
+    repi(i,0,n) {
+        cin>>a;
+        minh.push(a);
+    }
+    repi(i,0,m) {
+        cin>>b;
+        minh.pop();
+        minh.push(b);
+    }
+    ll su =0;
+    while (!minh.empty()) {
+        ll tp = minh.top();
+        su+=tp;
+        minh.pop();
+    }
+    print(su);
     return;
 }
 

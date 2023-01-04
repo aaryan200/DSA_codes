@@ -6,6 +6,8 @@
         "iostream": "cpp",
         "functional": "cpp",
         "type_traits": "cpp",
-        "atomic": "cpp"
+        "atomic": "cpp",
+        "*.tcc": "cpp",
+        "list": "cpp"
     }
 }
