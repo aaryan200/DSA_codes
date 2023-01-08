@@ -4,8 +4,8 @@ typedef long long ll;
 typedef unsigned long long ull;
 #define print(x) cout<<x<<'\n'
 #define printe(x) cout<<x<<endl
-#define repi(i,a,b) for (int i=a;i<b;i++)
-#define repl(i,a,b) for (ll i=a;i<b;i++)
+#define prints(x) cout<<x<<" "
+#define rep(i,a,b) for (int i=a;i<b;i++)
 #define maxVec(v) *max_element(v.begin(),v.end())
 #define minVec(v) *min_element(v.begin(),v.end())
 #define bpcnt(a) __builtin_popcount(a)
@@ -20,27 +20,33 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
 
+const int N = 2.0e4+5;
+int dp[N];
+
 void solve() {
     int n,m;
     cin>>n>>m;
-    ll a,b;
-    priority_queue<ll,vector<ll>, greater<ll>> minh;
-    repi(i,0,n) {
-        cin>>a;
-        minh.push(a);
+    int temp = 2*m+2;
+    if (n>=m) {
+        print(n-m);
+        return;
     }
-    repi(i,0,m) {
-        cin>>b;
-        minh.pop();
-        minh.push(b);
+    while (temp>=m) {
+        dp[temp]=temp-m;
+        temp--;
     }
-    ll su =0;
-    while (!minh.empty()) {
-        ll tp = minh.top();
-        su+=tp;
-        minh.pop();
+    int prev = m;
+    temp = (m+1)/2;
+    while (true) {
+        dp[temp]=1+dp[2*temp];
+        for (int j=temp+1;j<prev;j++){
+            dp[j]=1+min(dp[j-1],dp[2*j]);
+        }
+        if (temp<=n) break;
+        prev = temp;
+        temp = (temp+1)/2;
     }
-    print(su);
+    print(dp[n]);
     return;
 }
 
@@ -48,8 +54,8 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    ll it,t=1;
-    cin>>t;
+    int it,t=1;
+    // cin>>t;
     for (it=0;it<t;it++) {
         solve();
     }
