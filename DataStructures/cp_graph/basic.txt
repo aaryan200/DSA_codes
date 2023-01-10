@@ -95,3 +95,4 @@ Identify a node with 0 indegree, add it to topsort array and remove it from grap
 Dijkstra's single source Shortest path algo:
 -------------------------------------------
 Only applicable for non negative edge weights.
+Using a indexed priority queue, it can be checked if the key is already present in the priority queue or not in log(n) time. This avoids refilling the priority queue with same key again.

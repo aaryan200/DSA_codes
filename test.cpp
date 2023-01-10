@@ -20,33 +20,48 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
 
-const int N = 2.0e4+5;
-int dp[N];
-
 void solve() {
-    int n,m;
-    cin>>n>>m;
-    int temp = 2*m+2;
-    if (n>=m) {
-        print(n-m);
+    int n;
+    cin>>n;
+    vector<int> a(n,0);
+    vector<int> check(101,0); bool ch=false;
+    rep(i,0,n) {
+        cin>>a[i];
+        if (check[a[i]]>0) ch=true;
+        check[a[i]]++;
+    }
+    if (!ch) {
+        sort(a.begin(),a.end(),greater<int>());
+        print("YES");
+        rep(i,0,n) prints(a[i]);
+        cout<<"\n";
         return;
     }
-    while (temp>=m) {
-        dp[temp]=temp-m;
-        temp--;
+    if (ch and n==2) {
+
+        print("NO");
+        return;
     }
-    int prev = m;
-    temp = (m+1)/2;
-    while (true) {
-        dp[temp]=1+dp[2*temp];
-        for (int j=temp+1;j<prev;j++){
-            dp[j]=1+min(dp[j-1],dp[2*j]);
+    sort(a.begin(),a.end(),greater<int>());
+    for (int i=1;i<n-i;i++) {
+        swap(a[i],a[n-i]);
+    }
+    int su=0;bool c=false;
+    for (int i=0;i<n;i++) {
+        if (a[i]==su) {
+            c=true;
+            break;
         }
-        if (temp<=n) break;
-        prev = temp;
-        temp = (temp+1)/2;
+        su+=a[i];
     }
-    print(dp[n]);
+    if (c) {
+        print("NO");
+    }
+    else {
+        print("YES");
+        rep(i,0,n) prints(a[i]);
+        cout<<"\n";
+    }
     return;
 }
 
@@ -55,7 +70,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int it,t=1;
-    // cin>>t;
+    cin>>t;
     for (it=0;it<t;it++) {
         solve();
     }
