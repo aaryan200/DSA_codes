@@ -38,7 +38,7 @@ int main()
         int n;string s;
         cin>>n;
         cin>>s;
-        print(longestPalindromicSubseq(s,n)/2);
+        print(longestPalindromicSubseq(s,n));
     }
     return 0;
 }

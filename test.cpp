@@ -8,6 +8,7 @@ typedef unsigned long long ull;
 #define rep(i,a,b) for (int i=a;i<b;i++)
 #define maxVec(v) *max_element(v.begin(),v.end())
 #define minVec(v) *min_element(v.begin(),v.end())
+#define sortVec(v) sort(v.begin(),v.end())
 #define bpcnt(a) __builtin_popcount(a)
 #define bpcntll(a) __builtin_popcountll(a)
 inline ll lsb(ll n) {return n&-n;}
@@ -19,33 +20,62 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // }
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
+// Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh;
 
-const int N = 1.0e4+5;
-int dp[N];
-
-bool solution(vector<int>& a, vector<int>& b, int x, int& n) {
-    if (dp[x]!=-1) return dp[x];
-    if (x==0) return dp[x]=1;
-    rep(i,0,n) {
-        if (b[i]>0) {
-            int xn = x-a[i];
-            b[i]--;
-            if (xn>=0 and solution(a,b,xn,n)==1) return dp[x]=1;
-            b[i]++;
-        }
-    }
-    return dp[x]=0;
-}
 
 void solve() {
-    memset(dp,-1,N*sizeof(int));
-    int n,x;
-    cin>>n>>x;
-    vector<int> a(n,0);
-    vector<int> b(n,0);
-    rep(i,0,n) cin>>a[i]>>b[i];
-    if (solution(a,b,x,n)) print("Yes");
-    else print("No");
+    ll n,c,tmp;
+    cin>>n>>c;
+    vector<pair<ll,ll>> a(n,make_pair(0,0));
+    vector<pair<ll,ll>> b(n,make_pair(0,0));
+    vector<bool> ch(n,false);
+    rep(i,0,n) {
+        cin>>tmp;
+        a[i].first = tmp+i+1;
+        a[i].second = i;
+        b[i].first = tmp+n-i;
+        b[i].second = i;
+    }
+    sortVec(a);
+    sortVec(b);
+    ll i=0,aind=0,bind=0,ans=0;
+    while (true) {
+        if (aind==0 and bind==0) {
+            c-=a[aind].first;
+            ch[a[aind].second]=true;
+            aind++;
+        }
+        else if ( a[aind]<b[bind] and !ch[a[aind].second]) {
+            c-=a[aind].first;
+            ch[a[aind].second]=true;
+            aind++;
+        }
+        else if (a[aind]>=b[bind] and !ch[b[bind].second]){
+            c-=b[bind].first;
+            ch[b[bind].second]=true;
+            bind++;
+        }
+        else if (!ch[a[aind].second]) {
+            c-=a[aind].first;
+            ch[a[aind].second]=true;
+            aind++;
+        }
+        else if (!ch[b[bind].second]) {
+            c-=b[bind].first;
+            ch[b[bind].second]=true;
+            bind++;
+        }
+        else if (ch[a[aind].second] and ch[b[bind].second]) {
+            aind++;
+            bind++;
+            continue;
+        }
+        if (c<0) break;
+        ans++;
+        // cout<<aind<<" "<<bind<<"\n";
+        if (aind==n or bind==n) break;
+    }
+    print(ans);
     return;
 }
 
@@ -53,8 +83,9 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    cout.tie(NULL);
     int it,t=1;
-    // cin>>t;
+    cin>>t;
     for (it=0;it<t;it++) {
         solve();
     }
