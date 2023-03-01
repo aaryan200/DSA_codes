@@ -2,6 +2,7 @@
 using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
+#define nl '\n'
 #define print(x) cout<<x<<'\n'
 #define printe(x) cout<<x<<endl
 #define prints(x) cout<<x<<" "
@@ -22,60 +23,35 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // memset(arr, 0, n*sizeof(arr[0]));
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh;
 
-
 void solve() {
-    ll n,c,tmp;
-    cin>>n>>c;
-    vector<pair<ll,ll>> a(n,make_pair(0,0));
-    vector<pair<ll,ll>> b(n,make_pair(0,0));
-    vector<bool> ch(n,false);
-    rep(i,0,n) {
-        cin>>tmp;
-        a[i].first = tmp+i+1;
-        a[i].second = i;
-        b[i].first = tmp+n-i;
-        b[i].second = i;
+    string a, b;
+    cin>>a>>b;
+    int m = a.size(), n = b.size(), i= 0, j=0;
+    string ans = "";
+    if (m>n) {
+        swap(a,b);
+        swap(m,n);
     }
-    sortVec(a);
-    sortVec(b);
-    ll i=0,aind=0,bind=0,ans=0;
     while (true) {
-        if (aind==0 and bind==0) {
-            c-=a[aind].first;
-            ch[a[aind].second]=true;
-            aind++;
+        bool c= true;
+        while (i<m and j<n and a[i]!=b[j]) {
+            j++;
         }
-        else if ( a[aind]<b[bind] and !ch[a[aind].second]) {
-            c-=a[aind].first;
-            ch[a[aind].second]=true;
-            aind++;
+        if (!c) ans += '*';
+        while (i< m and j<n and a[i]==b[j]) {
+            ans += a[i];
+            i++;
+            j++;
         }
-        else if (a[aind]>=b[bind] and !ch[b[bind].second]){
-            c-=b[bind].first;
-            ch[b[bind].second]=true;
-            bind++;
-        }
-        else if (!ch[a[aind].second]) {
-            c-=a[aind].first;
-            ch[a[aind].second]=true;
-            aind++;
-        }
-        else if (!ch[b[bind].second]) {
-            c-=b[bind].first;
-            ch[b[bind].second]=true;
-            bind++;
-        }
-        else if (ch[a[aind].second] and ch[b[bind].second]) {
-            aind++;
-            bind++;
-            continue;
-        }
-        if (c<0) break;
-        ans++;
-        // cout<<aind<<" "<<bind<<"\n";
-        if (aind==n or bind==n) break;
+        if (j==n or i==m) break;
     }
-    print(ans);
+    if (j!=n) ans+='*';
+    int stc = count(ans.begin(),ans.end(),'*');
+    if (stc<=ans.length()-stc) {
+        print("YES");
+        print(ans);
+    }
+    else print("NO");
     return;
 }
 
