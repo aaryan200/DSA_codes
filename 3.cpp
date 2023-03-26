@@ -20,6 +20,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    cout<<3<<endl;
+    cout<<100<<endl;
+    for (int i =0;i<100;i++) {
+        cout<<2000<<'\n';
+        for (int j=0;j<2000;j++) cout<<'a';
+        cout<<'\n';
+    }
     return 0;
 }

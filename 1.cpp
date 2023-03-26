@@ -21,37 +21,31 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // }
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
-// Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh;
+// Min heap: priority_queue<ll, vector<ll>, greater<ll> > min
 
 void solve() {
-    string a, b;
-    cin>>a>>b;
-    int m = a.size(), n = b.size(), i= 0, j=0;
-    string ans = "";
-    if (m>n) {
-        swap(a,b);
-        swap(m,n);
+    ll n,k;
+    cin>>n>>k;
+    vector<ll> s(k);
+    rep(i,0,k) cin>>s[i];
+    if (k==1) {
+        print("Yes");
+        return;
     }
-    while (true) {
-        bool c= true;
-        while (i<m and j<n and a[i]!=b[j]) {
-            j++;
+    ll first = s[1]-s[0];
+    ll a = first;
+    rep(i,2,k) {
+        ll temp = s[i]- s[i-1];
+        if (temp < a) {
+            print("No");
+            return;
         }
-        if (!c) ans += '*';
-        while (i< m and j<n and a[i]==b[j]) {
-            ans += a[i];
-            i++;
-            j++;
-        }
-        if (j==n or i==m) break;
+        a = temp;
     }
-    if (j!=n) ans+='*';
-    int stc = count(ans.begin(),ans.end(),'*');
-    if (stc<=ans.length()-stc) {
-        print("YES");
-        print(ans);
+    if (s[0] > (n-k+1)*first) {
+        print("No");
     }
-    else print("NO");
+    else print("Yes");
     return;
 }
 

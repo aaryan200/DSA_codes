@@ -31,7 +31,7 @@ sparse_table createSparseTable(vector<ll>& a, ll n) {
         indexes[0][j]=j;
     }
     for (ll row=1;row<=p;row++) {
-        for (ll col=0;col<n;col++) {
+        for (ll col=0;col<n-(1<<(row-1));col++) {
             ll left = actual_values[row-1][col], right = actual_values[row-1][col+(1<<(row-1))];
             actual_values[row][col]=min(left,right);
             if (left<right) indexes[row][col]=indexes[row-1][col];

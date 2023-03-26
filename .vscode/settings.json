@@ -8,6 +8,20 @@
         "type_traits": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
-        "list": "cpp"
-    }
+        "list": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp"
+    },
+    "python.analysis.typeCheckingMode": "off"
 }
