@@ -14,6 +14,11 @@ typedef unsigned long long ull;
 #define bpcntll(a) __builtin_popcountll(a)
 inline ll lsb(ll n) {return n&-n;}
 inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
+
+// bool sortcol(const vector<int>& v1, const vector<int>& v2)
+// {
+//     return v1[1] < v2[1];
+// }
 // bool sortbysec(const pair<ll,ll> &a,
 // 			const pair<ll,ll> &b)
 // {
@@ -23,29 +28,54 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // memset(arr, 0, n*sizeof(arr[0]));
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > min
 
-void solve() {
-    ll n,k;
-    cin>>n>>k;
-    vector<ll> s(k);
-    rep(i,0,k) cin>>s[i];
-    if (k==1) {
-        print("Yes");
-        return;
-    }
-    ll first = s[1]-s[0];
-    ll a = first;
-    rep(i,2,k) {
-        ll temp = s[i]- s[i-1];
-        if (temp < a) {
-            print("No");
-            return;
+bool solve1(vector<ll> a, int n, ll minn) {
+    for (int i=0;i<n-1;i++) {
+        if (a[i] > minn) {
+            a[i+1] -= (a[i]-minn);
+            a[i] = minn;
         }
-        a = temp;
+        else if (a[i] < minn) {
+            a[i+1] += (minn-a[i]);
+            a[i] = minn;
+        }
     }
-    if (s[0] > (n-k+1)*first) {
-        print("No");
+    if (a[n-1] >= a[n-2]) {
+        return true;
     }
-    else print("Yes");
+    return false;
+}
+
+bool solve2(vector<ll> a, int n, ll minn) {
+    for (int i=n-1;i>0;i--) {
+        if (a[i] > minn) {
+            a[i-1] -= (a[i]-minn);
+            a[i] = minn;
+        }
+        else if (a[i] < minn) {
+            a[i-1] += (minn-a[i]);
+            a[i] = minn;
+        }
+    }
+    if (a[0] <= a[1]) {
+        return true;
+    }
+    return false;
+}
+
+void solve() {
+    ll n;
+    cin >> n;
+    vector<ll> a(n,0);
+    rep(i,0,n) cin >> a[i];
+    ll minn = minVec(a);
+    bool ans1 = solve1(a,n,minn);
+    bool ans2 = solve2(a,n,minn);
+    if (ans1 or ans2) {
+        print("YES");
+    }
+    else {
+        print("NO");
+    }
     return;
 }
 

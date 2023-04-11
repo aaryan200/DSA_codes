@@ -14,6 +14,11 @@ typedef unsigned long long ull;
 #define bpcntll(a) __builtin_popcountll(a)
 inline ll lsb(ll n) {return n&-n;}
 inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
+
+// bool sortcol(const vector<int>& v1, const vector<int>& v2)
+// {
+//     return v1[1] < v2[1];
+// }
 // bool sortbysec(const pair<ll,ll> &a,
 // 			const pair<ll,ll> &b)
 // {
@@ -24,80 +29,87 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > min
 
 void solve() {
-    int n,m,c;
-    cin>>n>>m;
-    vector<pair<vector<int>,int>> v;
-    vector<vector<int>> v1;
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    vector<int> f(26,0);
+    int dist = 0;
     rep(i,0,n) {
-        vector<pair<int,int>> temp;
-        rep(j,0,m) {
-            cin>>c;
-            temp.push_back({c,j+1});
+        if (f[s[i]-'a']==0) dist++;
+        f[s[i]-'a']++;
+    }
+    int maxdist;
+    for (int i=1;i<=dist;i++) {
+        if (n%i==0) maxdist = i;
+    }
+    int finFreq = n/maxdist;
+    vector<pair<int,char>> pos;
+    vector<pair<int,char>> neg;
+    vector<pair<int,char>> negpos;
+    rep(i,0,26) {
+        if (f[i]!=0) {
+            if (f[i] < finFreq) {
+                neg.push_back({f[i]-finFreq, i+'a'});
+                negpos.push_back({f[i], i+'a'});
+            }
+            else if (f[i] > finFreq) {
+                pos.push_back({f[i]-finFreq, i+'a'});
+            }
         }
-        sortVec(temp);
-        vector<int> t(m);
-        rep(j,0,m) t[j] = temp[j].second;
-        v.push_back({t,i});
-        v1.push_back(t);
     }
-    sortVec(v);
-    for (int i=0;i<n;i++) {
-        cout<<v[i].second<<nl;
-        cout<<"v: ";
-        for (auto& i:v[i].first) prints(i);
-        cout<<nl;
-        cout<<"v1: ";
-        for (auto& i:v1[i]) prints(i);
-        cout<<nl;
+    sort(pos.begin(),pos.end(),greater<pair<int,char>>());
+    sortVec(neg);
+    sortVec(negpos);
+    int possz = pos.size(), negsz = neg.size();
+    if (possz==0 and negsz==0) {
+        print(0);
+        print(s);
+        return;
     }
-    vector<pair<int,int>> b; //index, beauty
+    int ipos=0, ineg=0, ops=0;
+    map<char,vector<pair<char,int>>> m;
+    while (true) {
+        if (ipos==possz) break;
+        int op = min(pos[ipos].first,-1*neg[ineg].first);
+        ops += op;
+        m[pos[ipos].second].push_back({neg[ineg].second,op});
+        pos[ipos].first -= op;
+        neg[ineg].first += op;
+        if (pos[ipos].first==0) ipos++;
+        if (neg[ineg].first==0) ineg++;
+        if (ipos==possz) break;
+    }
+    vector<pair<int,char>> nw;
+    rep(i,ineg,negsz) {
+        if (i==ineg) {
+            nw.push_back({finFreq+neg[ineg].first, neg[ineg].second});
+        }
+        else nw.push_back({negpos[i].first, negpos[i].second});
+    }
+    sortVec(nw);
+    int i=0,j=nw.size()-1;
+    while (true) {
+        if (i>=j) break;
+        int op = min(nw[i].first, finFreq-nw[j].first);
+        ops += op;
+        m[nw[j].second].push_back({nw[i].second,op});
+        nw[j].first += op;
+        nw[i].first -= op;
+        if (nw[j].first==finFreq) j--;
+        if (nw[i].first==0) i++;
+        if (i>=j) break;
+    }
+    
+    print(ops);
     rep(i,0,n) {
-        int it = upper_bound(v1.begin(),v1.end(),v[i].first)-v1.begin();
-        int bu=0;
-        if (it!=0 and it!=n) {
-            int b1 = 0, b2 =0;
-            rep(j,0,m) {
-                if (v[i].first[j]!=v1[it-1][j]) break;
-                b1++;
-            }
-            rep(j,0,m) {
-                if (v[i].first[j]!=v1[it][j]) break;
-                b2++;
-            }
-            bu = max(b1,b2);
+        if (m.find(s[i])!=m.end() and !m[s[i]].empty()) {
+            cout<<m[s[i]][0].first;
+            m[s[i]][0].second--;
+            if (m[s[i]][0].second==0) m[s[i]].erase(m[s[i]].begin());
         }
-        else if (it==0) {
-            rep(j,0,m) {
-                if (v[i].first[j]!=v1[it][j]) break;
-                bu++;
-            }
-        }
-        else {
-            rep(j,0,m) {
-                if (v[i].first[j]!=v1[it-1][j]) break;
-                bu++;
-            }
-        }
-        b.push_back({v[i].second,bu});
+        else cout<<s[i];
     }
-    // vector<vector<int>> sr(m,vector<int>(n,0));
-    // rep(i,0,m) {
-    //     rep(j,0,n) sr[i][j] = v[j].first[i];
-    // }
-    // vector<pair<int,int>> b; //index, beauty
-    // rep(i,0,n) {
-    //     int bu=0,beg =0,end=n;
-    //     rep(j,0,m) {
-    //         int lb = lower_bound(sr[j].begin(),sr[j].end(),v[i].first[j]) - sr[j].begin();
-    //         int ub = upper_bound(sr[j].begin(),sr[j].end(),v[i].first[j]) - sr[j].begin();
-    //         if (lb == n and ub == n) break;
-    //         beg = lb; end = ub;
-    //         bu++;
-    //     }
-    //     b.push_back({v[i].second,bu});
-    // }
-    sortVec(b);
-    for (auto& it:b) prints(it.second);
     cout<<nl;
     return;
 }
