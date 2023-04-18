@@ -21,7 +21,8 @@
         "ranges": "cpp",
         "span": "cpp",
         "regex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "random": "cpp"
     },
     "python.analysis.typeCheckingMode": "off"
 }

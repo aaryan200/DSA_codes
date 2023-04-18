@@ -28,54 +28,8 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // memset(arr, 0, n*sizeof(arr[0]));
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > min
 
-bool solve1(vector<ll> a, int n, ll minn) {
-    for (int i=0;i<n-1;i++) {
-        if (a[i] > minn) {
-            a[i+1] -= (a[i]-minn);
-            a[i] = minn;
-        }
-        else if (a[i] < minn) {
-            a[i+1] += (minn-a[i]);
-            a[i] = minn;
-        }
-    }
-    if (a[n-1] >= a[n-2]) {
-        return true;
-    }
-    return false;
-}
-
-bool solve2(vector<ll> a, int n, ll minn) {
-    for (int i=n-1;i>0;i--) {
-        if (a[i] > minn) {
-            a[i-1] -= (a[i]-minn);
-            a[i] = minn;
-        }
-        else if (a[i] < minn) {
-            a[i-1] += (minn-a[i]);
-            a[i] = minn;
-        }
-    }
-    if (a[0] <= a[1]) {
-        return true;
-    }
-    return false;
-}
-
 void solve() {
-    ll n;
-    cin >> n;
-    vector<ll> a(n,0);
-    rep(i,0,n) cin >> a[i];
-    ll minn = minVec(a);
-    bool ans1 = solve1(a,n,minn);
-    bool ans2 = solve2(a,n,minn);
-    if (ans1 or ans2) {
-        print("YES");
-    }
-    else {
-        print("NO");
-    }
+    
     return;
 }
 
