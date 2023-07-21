@@ -12,6 +12,7 @@ bool canConstructRec(string target,vector<string>& wordBank) {
         ll found=target.find(it);
         if (found!=string::npos) {
             if (found==0) {
+                // string after "it"
                 string suff=target.substr(it.length());
                 if (canConstructRec(suff,wordBank)) return true;
             }
@@ -26,6 +27,7 @@ bool canConstruct(string target,vector<string>& wordBank) {
     for (ll i=0;i<n+1;i++) {
         if (i==0) v[i]=true;
         else {
+            // last i characters of target
             string nt=target.substr(n-i,i);
             for (auto& it:wordBank) {
                 ll found=nt.find(it);

@@ -22,7 +22,9 @@
         "span": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "ostream": "cpp"
     },
-    "python.analysis.typeCheckingMode": "off"
+    "python.analysis.typeCheckingMode": "off",
+    "cph.general.onceMaintainerMessage": false
 }
