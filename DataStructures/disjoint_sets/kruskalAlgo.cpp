@@ -57,7 +57,7 @@ int main()
     // sort according to last element
     sort(e.begin(),e.end(),comp);
     int ans = 0;
-    for (int i=0;i<n;i++) {
+    for (int i=0;i<m;i++) {
         int u = findParent(e[i][0], parent);
         int v = findParent(e[i][1], parent);
         int wt = e[i][2];

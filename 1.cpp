@@ -45,69 +45,9 @@ vector<int> bits(ll n) {
     return v;
 }
 
-template <typename T>
-class TreeNode {
-    public :
-    T data;
-    TreeNode<T> *left;
-    TreeNode<T> *right;
-
-    TreeNode(T data) {
-        this -> data = data;
-        left = NULL;
-        right = NULL;
-    }
-
-    ~TreeNode() {
-        if(left)
-            delete left;
-        if(right)
-            delete right;
-    }
-};
-
-int solve(TreeNode<int>* node, int& ans) {
-    if (node == NULL) {
-        return 0;
-    }
-    bool c = true;
-    if ((node->left != NULL) and ((node->left)->data >= node->data)) {
-        c = false;
-    }
-    if ((node->right != NULL) and ((node->right)->data <= node->data)) {
-        c = false;
-    }
-    if (c) {
-        bool c1 = true;
-        int out = 1;
-        int temp1 = solve(node->left, ans);
-        if (temp1 == -1) c1 = false;
-        else out += temp1;
-        int temp2 = solve(node->right, ans);
-        if (temp2 == -1) c1 = false;
-        else out += temp2;
-        if (!c1) return -1;
-        ans = max(ans, out);
-        return out;
-    }
-    solve(node->left,  ans);
-    solve(node->right,  ans);
-    return -1;
-}
-
-int largestBST(TreeNode<int>* root) 
-{
-    int ans = 0;
-    solve(root, ans);
-    return ans;
-}
-
-void solve1(int ite) {
-    TreeNode<int>* root = new TreeNode<int>(3);
-    root->left = new TreeNode<int>(1);
-    root->right = new TreeNode<int>(4);
-    (root->left)->right = new TreeNode<int>(2);
-    print(largestBST(root));
+void solve(int test_number) {
+    bitset<4> b(8);
+    for (int i=0;i<4;i++) print(b[i]);
     return;
 }
 
@@ -115,10 +55,10 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t = 1, it;
-    // cin >> t;
-    for (it = 0; it < t; it++) {
-        solve1(it);
+    int tests = 1, test;
+    // cin >> tests;
+    for (test = 1; test <= tests; test++) {
+        solve(test);
     }
     return 0;
 }

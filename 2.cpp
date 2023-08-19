@@ -46,26 +46,10 @@ vector<int> bits(ll n) {
 }
 
 void solve(int ite) {
-    FILE* f = fopen("1.txt", "r");
-    int n;
-    fscanf(f, "%d", &n);
-    // cin >> n;
-    // cout << n << endl;
-    vector<int> a(n);
-    for (int i=0;i<n;i++) {
-        fscanf(f, "%d", &a[i]);
-        // cin >> a[i];
-    }
-    int ans = 0;
-    for (int i=0;i<n;i++) {
-        int minel = INT_MAX, maxel = INT_MIN;
-        for (int j=i;j<min(n, i+900);j++) {
-            minel = min(minel, a[j]);
-            maxel = max(maxel, a[j]);
-            if ((minel*maxel)%(j-i+1) == 0) ans++;
-        }
-    }
-    print(ans);
+    vector<vector<int>> v= {{2, 3}, {5, 4}, {6, 4}, {6, 7}};
+    vector<int> temp = {3, 3};
+    int ind = lower_bound(v.begin(), v.end(), temp) - v.begin();
+    print(ind);
     return;
 }
 

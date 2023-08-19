@@ -13,7 +13,7 @@ typedef unsigned long long ull;
 
 vector<ll> squares(ll n) {
     vector<ll> out;
-    ll sqr = sqrt(2*n+0.5);
+    ll sqr = sqrt(2*n) + 0.5;
     for (ll i=0;i<=sqr;i++) out.push_back(i*i);
     return out;
 }

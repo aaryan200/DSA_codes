@@ -32,9 +32,9 @@ inline ll msb(ll n) {return (1 << (31 - __builtin_clz(n)));}
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > min
 
 void solve(int ite) {
-    int n = 1e5;
+    int n = 1e3;
     print(n);
-    rep(i,0,n) print(9);
+    rep(i,0,n) print(1000000000);
     // print(30);
     return;
 }
