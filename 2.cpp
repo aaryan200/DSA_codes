@@ -27,14 +27,14 @@ inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 // {
 //     return v1[1] < v2[1];
 // }
-// bool sortbysec(const pair<ll,ll> &a,
-// 			const pair<ll,ll> &b)
-// {
-// 	return (a.second < b.second);
+// bool sortbysec(const vector<ll>& a, const vector<ll>& b) {
+//     return a[1] < b[1];
 // }
 // Fill whole array with 0.
 // memset(arr, 0, n*sizeof(arr[0]));
-// Min heap: priority_queue<ll, vector<ll>, greater<ll> > min
+// Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh
+// Dynamic allocation
+// int *arr = new int[5] { 9, 7, 5, 3, 1 };
 
 vector<int> bits(ll n) {
     bitset<64> b(n);
@@ -45,11 +45,51 @@ vector<int> bits(ll n) {
     return v;
 }
 
-void solve(int ite) {
-    vector<vector<int>> v= {{2, 3}, {5, 4}, {6, 4}, {6, 7}};
-    vector<int> temp = {3, 3};
-    int ind = lower_bound(v.begin(), v.end(), temp) - v.begin();
-    print(ind);
+void solve(int test_number) {
+    ll n, k;
+    cin >> n >> k;
+    vll a(n);
+    vll h(n);
+    rep(i,0,n) cin >> a[i];
+    rep(i,0,n) cin >> h[i];
+    int i = 0;
+    // if (n==1) {
+    //     print(0);
+    //     return;
+    // }
+    if (n==1) {
+        if (a[0] <= k) {
+            print(1);
+            // return;
+        }
+        else print(0);
+        return;
+    }
+    int ans = 0;
+    if (minVec(a) <= k) ans = 1;
+    while (true) {
+        while (i < n-1) {
+            if ((h[i] % h[i+1]) != 0) i++;
+            else break;
+        }
+        if (i >= n-1) break;
+        ll ctF = 0;
+        int j = i;
+        while (j < n) {
+            ctF += a[j];
+            while (ctF > k) {
+                ctF -= a[i];
+                i++;
+            }
+            ans = max(ans, j-i+1);
+            if (j == n-1) break;
+            if ((h[j] % h[j+1]) != 0) break;
+            j++;
+        }
+        i = j;
+        if (i >= n-1) break;
+    }
+    print(ans);
     return;
 }
 
@@ -57,10 +97,10 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t = 1, it;
-    // cin >> t;
-    for (it = 0; it < t; it++) {
-        solve(it);
+    int tests = 1, test;
+    cin >> tests;
+    for (test = 1; test <= tests; test++) {
+        solve(test);
     }
     return 0;
 }

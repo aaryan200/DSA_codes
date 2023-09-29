@@ -46,8 +46,7 @@ vector<int> bits(ll n) {
 }
 
 void solve(int test_number) {
-    bitset<4> b(8);
-    for (int i=0;i<4;i++) print(b[i]);
+    
     return;
 }
 
@@ -56,7 +55,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int tests = 1, test;
-    // cin >> tests;
+    cin >> tests;
     for (test = 1; test <= tests; test++) {
         solve(test);
     }
