@@ -16,16 +16,17 @@ class StickyBitConsensus implements MultiValConsensus {
 		int v = value;
 		arr[threadID] = value;
 		for (int i = 0; i < numBits ; i ++) {
-		b = bit i of v ;
-		s [i]. write (b) ;
-		if ( s [i]. read () != b ) {
-			for (int j = 0; j < numThr; j ++) {
-				if ( (arr[j] != -1) && (bits(arr[j])[0...i] match with s[0...i]) ) {
-					// Copy the value of the thread which has written a different value in s[i]
-					v = arr[j];
+			b = bit i of v ;
+			s [i]. write (b) ;
+			if ( s [i]. read () != b ) {
+				for (int j = 0; j < numThr; j ++) {
+					if ( (arr[j] != -1) && (bits(arr[j])[0...i] match with s[0...i]) ) {
+						// Copy the value of the thread which has written a different value in s[i]
+						v = arr[j];
+					}
 				}
 			}
 		}
-	return booleanArrayToInt (s);
+		return booleanArrayToInt (s);
 	}
 }
