@@ -66,8 +66,38 @@ ll modInverse(ll n, ll p)
     return power(n, p - 2, p);
 }
 
+int minSwaps(vector<int>&nums) {
+    // Code here
+    int n = nums.size();
+    vector<pair<int,int>> v;
+    for (int i=0;i<n;i++) {
+        v.push_back({nums[i], i});
+    }
+    sort(v.begin(), v.end());
+    int ans = 0;
+    vector<bool> vis(n, false);
+    for (int i=0;i<n;i++) {
+        if (!vis[i]) {
+            int cycle_size = 1;
+            vis[i] = true;
+            int j = v[i].second;
+            while (j != i) {
+                vis[j] = true;
+                cycle_size++;
+                j = v[j].second;
+            }
+            ans += cycle_size - 1;
+        }
+    }
+    return ans;
+}
+
 void solve(int test_number) {
-    
+    int n;
+    cin >> n;
+    vi v(n);
+    rep(i,0,n) cin >> v[i];
+    print(minSwaps(v));
     return;
 }
 
@@ -76,7 +106,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int tests = 1, test;
-    cin >> tests;
+    // cin >> tests;
     for (test = 1; test <= tests; test++) {
         solve(test);
     }

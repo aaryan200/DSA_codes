@@ -22,7 +22,6 @@ inline ll lsb(ll n)
 inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 #define MOD1 (ll)1000000007
 #define MOD2 (ll)998244353
-#define MOD3 (ll)1000003
 
 // bool sortcol(const vector<int>& v1, const vector<int>& v2)
 // {
@@ -32,7 +31,7 @@ inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 //     return a[1] < b[1];
 // }
 // Fill whole array with 0.
-// memset(arr, 0, sizeof(arr));
+// memset(arr, 0, n*sizeof(arr[0]));
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh
 // Dynamic allocation
 // int *arr = new int[5] { 9, 7, 5, 3, 1 };
@@ -66,8 +65,76 @@ ll modInverse(ll n, ll p)
     return power(n, p - 2, p);
 }
 
+const ll mod = 1e6 + 3, k = 11;
+
 void solve(int test_number) {
-    
+    ll a[k][k];
+    ll b[k];
+    for (ll i=0;i<k;i++) {
+        cout << "? " << i << endl;
+        ll y;
+        cin >> y;
+        b[i] = y;
+        for (ll j=0;j<k;j++) {
+            a[i][j] = power(i, j, mod);
+        }
+    }
+    // for (int i=0;i<k;i++) {
+    //     for (int j=0;j<k;j++) prints(a[i][j]);
+    //     cout << " ";
+    //     printe(b[i]);
+    // }
+    // cout << endl;
+    // Gauss elimination
+    ll coeffs[k];
+    for (ll i=0;i<k;i++) {
+        for (ll r=i+1;r<k;r++) {
+            ll f = (a[r][i] * modInverse(a[i][i], mod))%mod;
+            // ll f = 1;
+            for (ll c=i;c<k;c++) {
+                ll temp = (f * a[i][c]) % mod;
+                a[r][c] = (a[r][c] - temp)%mod;
+            }
+            b[r] -= f*b[i];
+            b[r] %= mod;
+        }
+    }
+    // for (int i=0;i<k;i++) {
+    //     for (int j=0;j<k;j++) prints(a[i][j]);
+    //     cout << " ";
+    //     printe(b[i]);
+    // }
+    for (ll i=k-1;i>=0;i--) {
+        ll su = 0;
+        for (ll j=i+1;j<k;j++) {
+            su += a[i][j]*coeffs[j];
+            su %= mod;
+        }
+        ll temp = (b[i] - su)%mod;
+        ll temp1 = 0;
+        temp1 = modInverse(a[i][i], mod);
+        coeffs[i] = (temp*temp1)%mod;
+    }
+    // cout << "here2" << endl;
+    // rep(i,0,k) cout << coeffs[i] << " ";
+    // cout << endl;
+    if (coeffs[0] == 0) {
+        cout << "! " << 0 << endl;
+        return;
+    }
+    for (ll x=1;x<mod;x++) {
+        ll y = 0;
+        for (ll i=0;i<k;i++) {
+            ll temp = (coeffs[i] * power(x, i, mod))%mod;
+            y += temp;
+            y %= mod;
+        }
+        if (y == 0) {
+            cout << "! " << x << endl;
+            return;
+        }
+    }
+    cout << "! " << -1 << endl;
     return;
 }
 
@@ -76,7 +143,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int tests = 1, test;
-    cin >> tests;
+    // cin >> tests;
     for (test = 1; test <= tests; test++) {
         solve(test);
     }

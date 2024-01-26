@@ -1,3 +1,16 @@
+/*
+You are given an array consisting of n distinct integers. On each move, you can swap any two adjacent values. You want to transform the array into a Hill array. This means that the final array has to be first increasing and then decreasing. It is also allowed that the final array is only increasing or decreasing. What is the minimum number of moves needed?
+
+Input Format
+
+The first input line has an integer n: the size of the array.
+The next line has n distinct integers x1,x2,…,xn the contents of the array.
+Constraints
+
+The value of n should be between 1 and 2*10^5.
+The individual elements xi should be between 1 and 10^9.
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -66,8 +79,35 @@ ll modInverse(ll n, ll p)
     return power(n, p - 2, p);
 }
 
+int minSwapsHill(vector<int>&nums) {
+    int n = nums.size();
+    vector<pair<int,int>> v;
+    for (int i=0;i<n;i++) {
+        v.push_back({nums[i], i});
+    }
+    sort(v.begin(), v.end());
+    int i = 0, j = n-1, ans = 0;
+    for (int k=0;k<n;k++) {
+        int x = abs(v[k].second - i), y = abs(v[k].second - j);
+        if (x <= y) {
+            ans += x;
+            i++;
+        }
+        else {
+            ans += y;
+            j--;
+        }
+    }
+    ans /= 2;
+    return ans;
+}
+
 void solve(int test_number) {
-    
+    int n;
+    cin >> n;
+    vi v(n);
+    rep(i,0,n) cin >> v[i];
+    print(minSwapsHill(v));
     return;
 }
 
@@ -76,7 +116,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int tests = 1, test;
-    cin >> tests;
+    // cin >> tests;
     for (test = 1; test <= tests; test++) {
         solve(test);
     }

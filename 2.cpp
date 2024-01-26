@@ -22,6 +22,7 @@ inline ll lsb(ll n)
 inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 #define MOD1 (ll)1000000007
 #define MOD2 (ll)998244353
+#define MOD3 (ll)1000003
 
 // bool sortcol(const vector<int>& v1, const vector<int>& v2)
 // {
@@ -31,64 +32,69 @@ inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 //     return a[1] < b[1];
 // }
 // Fill whole array with 0.
-// memset(arr, 0, n*sizeof(arr[0]));
+// memset(arr, 0, sizeof(arr));
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh
 // Dynamic allocation
 // int *arr = new int[5] { 9, 7, 5, 3, 1 };
+// bitset<64> b(n);
 
-vector<int> bits(ll n) {
-    bitset<64> b(n);
-    vector<int> v;
-    for (int i=0;i<64;i++) {
-        v.push_back(b[63-i]);
+// Returns x^y mod p
+ll power(ll x, ll y, ll p)
+{
+    ll res = 1; // Initialize result
+  
+    x = x % p; // Update x if it is more than or
+    // equal to p
+  
+    while (y > 0) 
+    {
+      
+        // If y is odd, multiply x with result
+        if (y & 1)
+            res = (res * x) % p;
+  
+        // y must be even now
+        y = y >> 1; // y = y/2
+        x = (x * x) % p;
     }
-    return v;
+    return res;
+}
+  
+// Returns n^(-1) mod p
+ll modInverse(ll n, ll p)
+{
+    return power(n, p - 2, p);
+}
+
+int dfs(vector<bool>& v, vector<vector<int>>& adj, int i) {
+    v[i] = true;
+    int ans = 0;
+    bool isLeaf = true;
+    for (auto& j:adj[i]) {
+        if (!v[j]) {
+            isLeaf = false;
+            ans += dfs(v, adj, j);
+        }
+    }
+    if (isLeaf) return 1;
+    return ans;
 }
 
 void solve(int test_number) {
-    ll n, k;
-    cin >> n >> k;
-    vll a(n);
-    vll h(n);
-    rep(i,0,n) cin >> a[i];
-    rep(i,0,n) cin >> h[i];
-    int i = 0;
-    // if (n==1) {
-    //     print(0);
-    //     return;
-    // }
-    if (n==1) {
-        if (a[0] <= k) {
-            print(1);
-            // return;
-        }
-        else print(0);
-        return;
+    int n;
+    cin >> n;
+    vector<vector<int>> adj(n);
+    rep(i,0,n-1) {
+        int u, v;
+        cin >> u >> v;
+        u--; v--;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
-    int ans = 0;
-    if (minVec(a) <= k) ans = 1;
-    while (true) {
-        while (i < n-1) {
-            if ((h[i] % h[i+1]) != 0) i++;
-            else break;
-        }
-        if (i >= n-1) break;
-        ll ctF = 0;
-        int j = i;
-        while (j < n) {
-            ctF += a[j];
-            while (ctF > k) {
-                ctF -= a[i];
-                i++;
-            }
-            ans = max(ans, j-i+1);
-            if (j == n-1) break;
-            if ((h[j] % h[j+1]) != 0) break;
-            j++;
-        }
-        i = j;
-        if (i >= n-1) break;
-    }
+    vector<bool> v(n, false);
+    int leafs = dfs(v, adj, 0);
+    if (adj[0].size()==1) leafs++;
+    int ans = (leafs+1)/2;
     print(ans);
     return;
 }

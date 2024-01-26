@@ -67,7 +67,11 @@ ll modInverse(ll n, ll p)
 }
 
 void solve(int test_number) {
-    
+    int n = 2e5;
+    print(1);
+    print(n);
+    rep(i,0,n) cout << 'a';
+    print("");
     return;
 }
 
@@ -76,7 +80,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int tests = 1, test;
-    cin >> tests;
+    // cin >> tests;
     for (test = 1; test <= tests; test++) {
         solve(test);
     }

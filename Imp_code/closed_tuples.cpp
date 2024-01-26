@@ -22,7 +22,6 @@ inline ll lsb(ll n)
 inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 #define MOD1 (ll)1000000007
 #define MOD2 (ll)998244353
-#define MOD3 (ll)1000003
 
 // bool sortcol(const vector<int>& v1, const vector<int>& v2)
 // {
@@ -32,13 +31,15 @@ inline ll msb(ll n) { return (1 << (31 - __builtin_clz(n))); }
 //     return a[1] < b[1];
 // }
 // Fill whole array with 0.
-// memset(arr, 0, sizeof(arr));
+// memset(arr, 0, n*sizeof(arr[0]));
 // Min heap: priority_queue<ll, vector<ll>, greater<ll> > minh
 // Dynamic allocation
 // int *arr = new int[5] { 9, 7, 5, 3, 1 };
 // bitset<64> b(n);
 
-// Returns x^y mod p
+const int N = 2e5 + 5;
+ll fac[N + 1];
+
 ll power(ll x, ll y, ll p)
 {
     ll res = 1; // Initialize result
@@ -65,9 +66,46 @@ ll modInverse(ll n, ll p)
 {
     return power(n, p - 2, p);
 }
+  
+// Returns nCr % p using Fermat's little
+// theorem.
+ll nCrModPFermat(ll n,ll r, ll p)
+{
+    // If n<r, then nCr should return 0
+    if (n < r)
+        return 0;
+    // Base case
+    if (r == 0)
+        return 1;
+  
+    return (fac[n] * modInverse(fac[r], p) % p
+            * modInverse(fac[n - r], p) % p)% p;
+}
 
 void solve(int test_number) {
-    
+    ll n, m, k;
+    cin >> n >> m >> k;
+    vll a(n);
+    rep(i,0,n) cin >> a[i];
+    if (m > n) {
+        print(0);
+        return;
+    }
+    if (m == 1) {
+        print(n);
+        return;
+    }
+    sortVec(a);
+    ll ans = 0;
+    rep(i,0,n) {
+        ll j = upper_bound(a.begin(), a.end(), a[i] + k) - a.begin();
+        j -= 1;
+        if (j -i >= m-1) {
+            ans += nCrModPFermat(j-i, m-1, MOD1);
+            ans %= MOD1;
+        }
+    }
+    print(ans);
     return;
 }
 
@@ -77,6 +115,13 @@ int main() {
     cout.tie(NULL);
     int tests = 1, test;
     cin >> tests;
+    // Fill factorial array so that we
+    // can find all factorial of r, n
+    // and n-r
+    fac[0] = 1;
+    for (ll i = 1; i <= N; i++) {
+        fac[i] = (fac[i - 1] * i) % MOD1;
+    }
     for (test = 1; test <= tests; test++) {
         solve(test);
     }
