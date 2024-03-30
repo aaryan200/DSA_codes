@@ -15,6 +15,7 @@ typedef unsigned long long ull;
 #define bpcntll(a) __builtin_popcountll(a)
 #define vi vector<int>
 #define vll vector<ll>
+#define pll pair<ll,ll>
 inline ll lsb(ll n)
 {
     return n & -n;
@@ -67,7 +68,30 @@ ll modInverse(ll n, ll p)
 }
 
 void solve(int test_number) {
-    
+    int n, m;
+    cin >> n >> m;
+    vll a(n);
+    vll b(n);
+    rep(i,0,n) cin >> a[i];
+    rep(i,0,n) cin >> b[i];
+    vll suff(n+1);
+    vll neg_val(n+1);
+    suff[n] = 0;
+    neg_val[n] = 0;
+    for (int i=n-1;i>=0;i--) {
+        suff[i] = b[i] + suff[i+1];
+    }
+    for (int i=n-1;i>=0;i--) {
+        ll val = a[i] - b[i];
+        if (val < 0) neg_val[i] = neg_val[i+1] + val;
+        else neg_val[i] = neg_val[i+1];
+    }
+    ll ans = LLONG_MAX;
+    rep(i,0,m) {
+        ll cost = suff[i] + neg_val[i+1] + a[i] - b[i];
+        ans = min(ans, cost);
+    }
+    print(ans);
     return;
 }
 

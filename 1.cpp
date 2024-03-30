@@ -13,6 +13,7 @@ typedef unsigned long long ull;
 #define issorted(v) is_sorted(v.begin(), v.end())
 #define bpcnt(a) __builtin_popcount(a)
 #define bpcntll(a) __builtin_popcountll(a)
+#define pll pair<ll,ll>
 #define vi vector<int>
 #define vll vector<ll>
 inline ll lsb(ll n)
@@ -67,18 +68,19 @@ ll modInverse(ll n, ll p)
 }
 
 void solve(int test_number) {
-    int n;
-    cin >> n;
-    string s;
-    cin >> s;
-    set<char> st;
-    st.insert(s[0]);
-    int ans = 0;
-    for (int i=1; i <= n;i++) {
-        ans += st.size();
-        if (i < n) st.insert(s[i]);
+    ll a, b, c;
+    cin >> a >> b >> c;
+    ll bm3 = b%3;
+    if (bm3 != 0 and c < 3-bm3) {
+        print(-1);
+        return;
     }
-    print(ans);
+    ll by3 = (b+c)/3;
+    ll md = (b+c)%3;
+    if (md != 0) {
+        print(a+by3+1);
+    }
+    else print(a+by3);
     return;
 }
 

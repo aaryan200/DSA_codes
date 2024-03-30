@@ -14,6 +14,7 @@ typedef unsigned long long ull;
 #define bpcnt(a) __builtin_popcount(a)
 #define bpcntll(a) __builtin_popcountll(a)
 #define vi vector<int>
+#define pll pair<ll,ll>
 #define vll vector<ll>
 inline ll lsb(ll n)
 {
@@ -66,36 +67,11 @@ ll modInverse(ll n, ll p)
     return power(n, p - 2, p);
 }
 
-int dfs(vector<bool>& v, vector<vector<int>>& adj, int i) {
-    v[i] = true;
-    int ans = 0;
-    bool isLeaf = true;
-    for (auto& j:adj[i]) {
-        if (!v[j]) {
-            isLeaf = false;
-            ans += dfs(v, adj, j);
-        }
-    }
-    if (isLeaf) return 1;
-    return ans;
-}
-
 void solve(int test_number) {
-    int n;
-    cin >> n;
-    vector<vector<int>> adj(n);
-    rep(i,0,n-1) {
-        int u, v;
-        cin >> u >> v;
-        u--; v--;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
-    vector<bool> v(n, false);
-    int leafs = dfs(v, adj, 0);
-    if (adj[0].size()==1) leafs++;
-    int ans = (leafs+1)/2;
-    print(ans);
+    ll a, b, m;
+    cin >> a >> b >> m;
+    ll i1 = m/b, i2 = m/a;
+    print(i1+i2+2);
     return;
 }
 

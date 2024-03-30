@@ -14,6 +14,7 @@ typedef unsigned long long ull;
 #define bpcnt(a) __builtin_popcount(a)
 #define bpcntll(a) __builtin_popcountll(a)
 #define vi vector<int>
+#define pll pair<ll,ll>
 #define vll vector<ll>
 inline ll lsb(ll n)
 {
@@ -71,48 +72,34 @@ void solve(int test_number) {
     cin >> n;
     string s;
     cin >> s;
-    if (n==1) {
-        print(0);
-        return;
+    int n0 = 0, n1 = 0;
+    rep(i,0,n) {
+        if (s[i] == '0') n0++;
+        else n1++;
     }
-    vi maxInd(n);
-    maxInd[n-1] = n;
-    int maxI = n-1; char maxV = s[n-1];
-    for (int i=n-2;i>=0;i--) {
-        maxInd[i] = maxI;
-        if (s[i] >= maxV) {
-            maxV = s[i]; maxI = i;
+    int c0 = 0, c1 = 0, ans = 0, prev = -1;
+    for (int k=0;k<=n;k++) {
+        int th1 = (k+1)/2, th2 = (n-k+1)/2;
+        if (c0 >= th1 && n1-c1 >= th2) {
+            int temp = abs(n-2*k);
+            if (prev == -1) {
+                prev = temp;
+                ans = k;
+            }
+            else if (temp < prev) {
+                prev = temp;
+                ans = k;
+            }
+            // else if (temp == prev and k < ans) {
+            //     ans = k;
+            // }
+        }
+        if (k < n) {
+            if (s[k] == '0') c0++;
+            else c1++;
         }
     }
-    char maxEl = maxVec(s);
-    // print(maxEl);
-    vector<pair<int,char>> temp;
-    int i;
-    for (i=0;i<n;i++) {
-        if (s[i] == maxEl) break;
-    }
-    while (i!=n) {
-        temp.push_back({i, s[i]});
-        i = maxInd[i];
-    }
-    int m = temp.size();
-    int temp1 = 1, tempVal = temp[0].second;
-    rep(i,1,m) {
-        if (temp[i].second != tempVal) break;
-        temp1++;
-    }
-    // int ans = 0;
-    rep(i,0,m) {
-        // if (s[n-1] == maxEl) break;
-        s[temp[i].first] = temp[m-1-i].second;
-        // ans++;
-    }
-    // print(s);
-    if (is_sorted(s.begin(), s.end())) {
-        print(m-temp1);
-        return;
-    }
-    print(-1);
+    print(ans);
     return;
 }
 

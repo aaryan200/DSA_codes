@@ -1,41 +1,15 @@
 // Fibonacci Series using Optimized Method
 #include <bits/stdc++.h>
 using namespace std;
+#define MOD1 (ll)1000000007
 
-void multiply(int F[2][2], int M[2][2]);
-void power(int F[2][2], int n);
 
-// Function that returns nth Fibonacci number
-int fib(int n)
+void multiply(ll F[2][2], ll M[2][2], ll mod)
 {
-	int F[2][2] = {{1, 1}, {1, 0}};
-	if (n == 0)
-		return 0;
-	power(F, n - 1);
-
-	return F[0][0];
-}
-
-// Optimized version of power() in method 4
-void power(int F[2][2], int n)
-{
-	if(n == 0 || n == 1)
-	return;
-	int M[2][2] = {{1, 1}, {1, 0}};
-	
-	power(F, n / 2);
-	multiply(F, F);
-	
-	if (n % 2 != 0)
-		multiply(F, M);
-}
-
-void multiply(int F[2][2], int M[2][2])
-{
-	int x = F[0][0] * M[0][0] + F[0][1] * M[1][0];
-	int y = F[0][0] * M[0][1] + F[0][1] * M[1][1];
-	int z = F[1][0] * M[0][0] + F[1][1] * M[1][0];
-	int w = F[1][0] * M[0][1] + F[1][1] * M[1][1];
+	ll x = ((F[0][0] * M[0][0])%mod + (F[0][1] * M[1][0])%mod)%mod;
+	ll y = ((F[0][0] * M[0][1])%mod + (F[0][1] * M[1][1])%mod)%mod;
+	ll z = ((F[1][0] * M[0][0])%mod + (F[1][1] * M[1][0])%mod)%mod;
+	ll w = ((F[1][0] * M[0][1])%mod + (F[1][1] * M[1][1])%mod)%mod;
 	
 	F[0][0] = x;
 	F[0][1] = y;
@@ -43,13 +17,38 @@ void multiply(int F[2][2], int M[2][2])
 	F[1][1] = w;
 }
 
+// Optimized version of power() in method 4
+void power(ll F[2][2], ll n, ll mod)
+{
+	if(n == 0 || n == 1)
+	return;
+	ll M[2][2] = {{1, 1}, {1, 0}};
+	
+	power(F, n / 2, mod);
+	multiply(F, F, mod);
+	
+	if (n % 2 != 0)
+		multiply(F, M);
+}
+
+// Function that returns nth Fibonacci number
+ll fib(ll n, ll mod)
+{
+	ll F[2][2] = {{1, 1}, {1, 0}};
+	if (n == 0)
+		return 0;
+	power(F, n - 1, mod);
+
+	return F[0][0];
+}
+
 // Driver code
 int main()
 {
-	int n;
+	ll n;
 	cin>>n;
 	
-	cout << fib(n)<<"\n";
+	cout << fib(n, MOD1)<<"\n";
 	// getchar();
 	
 	return 0;
